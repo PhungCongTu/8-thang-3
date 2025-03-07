@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng 8/3, cún iu!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            background: url('./hi.jpg') no-repeat center center/cover;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .message {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .message.active {
+            opacity: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: floatUp 5s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+
+        .dog-img {
+            animation: wiggle 2s infinite ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-3deg) scale(1.05); }
+            50% { transform: rotate(3deg) scale(1.1); }
+            75% { transform: rotate(-3deg) scale(1.05); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-pink-500 text-2xl md:text-4xl font-bold mb-6">
+        Chúc mừng ngày 8/3, cô bé cung thiên bình!
+    </h1>
+    <img src="./Anh2.jpg" 
+         alt="Cute cartoon dog" class="mb-6 dog-img" width="200" height="200"/>
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center max-w-md mx-auto">
+        <p id="message" class="text-gray-300 mb-4 message active">
+            Gửi đến người phụ nữ tuyệt vời, cô bé cung thiên bình
+        </p>
+        <button id="nextBtn" class="bg-pink-500 text-white py-2 px-4 rounded-full hover:bg-pink-600 transition duration-300">
+            Next Message
+        </button>
+
+    </div>
+
+    <script>
+        const messages = [
+            "Gửi đến người phụ nữ tuyệt vời, cô bé cung thiên bình",
+            "Chúc người đẹp một ngày 8/3 thật vui vẻ, hạnh phúc và rạng rỡ như những bông hoa đẹp nhất!",
+            "Mong rằng hôm nay và tất cả những ngày sau, em luôn rạng rỡ như ánh mặt trời, xinh đẹp như những đóa hoa và hạnh phúc như một nàng công chúa❤️!",
+            "Hy vọng em luôn cười thật tươi, vì nụ cười của em chính là điều đẹp nhất mà tui từng thấy!"
+        ];
+
+        let index = 0;
+        const messageElement = document.getElementById("message");
+        const nextButton = document.getElementById("nextBtn");
+        const finishButton = document.getElementById("finishBtn");
+
+        nextButton.addEventListener("click", () => {
+            messageElement.classList.remove("active");
+            setTimeout(() => {
+                index = (index + 1) % messages.length;
+                messageElement.textContent = messages[index];
+                messageElement.classList.add("active");
+
+                if (index === messages.length - 1) {
+                    nextButton.classList.add("hidden");
+                    finishButton.classList.remove("hidden");
+                }
+            }, 500);
+        });
+
+        finishButton.addEventListener("click", () => {
+            window.location.href = "Finish.html"; // Đổi thành trang bạn muốn chuyển đến
+        });
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            document.body.appendChild(heart);
+
+            const x = Math.random() * window.innerWidth;
+            const size = Math.random() * 20 + 10;
+            const duration = Math.random() * 2 + 1.5;
+
+            heart.style.left = `${x}px`;
+            heart.style.fontSize = `${size}px`;
+            heart.style.animationDuration = `${duration}s`;
+
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createHeart, 200);
+    </script>
+</body>
+</html>
